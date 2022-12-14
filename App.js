@@ -1,11 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import Login from "./app/screens/Login";
+import LayoutWrapper from "./app/components/LayoutWrapper";
+import { useState, useEffect } from "react";
+import { authService } from "./app/services/AuthServices";
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  function handleLoggedInStatus() {
+    setIsLoggedIn(!isLoggedIn);
+  }
+  useEffect(() => {
+    async function loginCheck() {
+      isAuthenticated = await authService.isAuthenticated();
+      if (isAuthenticated) {
+        setIsLoggedIn(true);
+      }
+    }
+    loginCheck();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <SafeAreaView></SafeAreaView>
+      {isLoggedIn ? (
+        <LayoutWrapper></LayoutWrapper>
+      ) : (
+        <Login handleLoggedInStatus={handleLoggedInStatus} />
+      )}
     </View>
   );
 }
@@ -13,8 +33,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
