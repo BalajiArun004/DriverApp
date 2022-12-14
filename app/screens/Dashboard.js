@@ -17,6 +17,10 @@ import { authService } from "../services/AuthServices";
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      UserInfo: {},
+      jobCompletedCount: 0,
+    };
   }
 
   async componentDidMount() {
@@ -35,68 +39,39 @@ export default class Dashboard extends Component {
               " " +
               this.state?.UserInfo?.LastName}
           </Text>
-          <Text style={styles.job_title}>Receptionist</Text>
+          <Text style={styles.job_title}>Driver</Text>
         </View>
         <View style={styles.dashboard}>
-          <View style={styles.grid_columns}>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("JobList");
-              }}
-            >
-              <View>
-                <Image source={job_tile}></Image>
-
-                <Text
-                  style={{
-                    fontSize: 20,
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    bottom: 20,
-                  }}
-                >
-                  Jobs
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <View
+          <View
+            style={{
+              width: "95%",
+              height: "100%",
+              paddingTop: 10,
+              marginLeft: 10,
+              marginRight: 10,
+            }}
+          >
+            <ImageBackground
               style={{
-                width: 150,
-                height: 100,
-                paddingTop: 10,
+                width: "100%",
+                height: "100%",
               }}
+              imageStyle={{ borderRadius: 6 }}
+              source={job_count_tile}
             >
-              <ImageBackground
+              <Text
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  fontSize: 50,
+                  color: "white",
+                  textAlign: "left",
+                  paddingTop: 50,
+                  fontWeight: "bold",
+                  paddingLeft: 16,
                 }}
-                imageStyle={{ borderRadius: 6 }}
-                source={job_count_tile}
               >
-                <Text
-                  style={{
-                    fontSize: 30,
-                    color: "white",
-                    textAlign: "center",
-                    paddingTop: 20,
-                    fontWeight: "bold",
-                  }}
-                >
-                  10
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: "white",
-                    textAlign: "center",
-                    fontWeight: "bold",
-                  }}
-                >
-                  InProgress
-                </Text>
-              </ImageBackground>
-            </View>
+                {this.state?.jobCompletedCount || 0}
+              </Text>
+            </ImageBackground>
           </View>
         </View>
         <TouchableHighlight style={styles.recent_job_button}>
@@ -137,7 +112,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
   },
   dashboard: {
-    flex: 3.3,
+    flex: 1.3,
   },
   recent_job_button: {
     flex: 0.7,
@@ -161,10 +136,5 @@ const styles = StyleSheet.create({
   },
   recent_job: {
     flex: 2.7,
-  },
-  grid_columns: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
   },
 });

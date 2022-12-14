@@ -56,6 +56,10 @@ const JOBS_APIS = {
     url: `${JOBS_BASE_URL}/edit`,
     method: "post",
   },
+  jobStatus: {
+    url: `${JOBS_BASE_URL}/jobStatus`,
+    method: "post",
+  },
 };
 
 const COMMON_APIS = {
